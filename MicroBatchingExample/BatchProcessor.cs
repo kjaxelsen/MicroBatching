@@ -1,4 +1,5 @@
-﻿using MicroBatching;
+﻿using MicroBatching.Interfaces;
+using MicroBatching.Models;
 
 namespace MicroBatchingExample
 {

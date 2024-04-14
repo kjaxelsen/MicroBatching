@@ -1,4 +1,4 @@
-﻿namespace MicroBatching
+﻿namespace MicroBatching.Models
 {
     /// <summary>
     /// Service options to control the frequency and batch size for the micro batching service

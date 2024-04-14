@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace MicroBatching
+﻿namespace MicroBatching.Models
 {
     public enum JobResultStatus
     {
@@ -17,7 +15,7 @@ namespace MicroBatching
             Details = details;
         }
 
-        public int JobId {  get; set; }
+        public int JobId { get; set; }
         public JobResultStatus Status { get; set; }
         public string? Details { get; set; }
 

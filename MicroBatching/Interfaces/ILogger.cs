@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MicroBatching
+﻿namespace MicroBatching.Interfaces
 {
     /// <summary>
     /// Simple logging interface to implement for logging in the micro batcher

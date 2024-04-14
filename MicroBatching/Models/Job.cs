@@ -1,4 +1,4 @@
-﻿namespace MicroBatching
+﻿namespace MicroBatching.Models
 {
     public class Job
     {

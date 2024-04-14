@@ -1,4 +1,7 @@
-﻿namespace MicroBatching
+﻿using MicroBatching.Interfaces;
+using MicroBatching.Models;
+
+namespace MicroBatching
 {
     public class MicroBatchingService
     {

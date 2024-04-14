@@ -1,4 +1,5 @@
 ﻿using MicroBatching;
+using MicroBatching.Models;
 using MicroBatchingExample;
 
 MicroBatchingService service = new MicroBatchingService(new BatchProcessor(), new Logger(), new MicroBatchingServiceOptions()

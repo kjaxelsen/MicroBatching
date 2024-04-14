@@ -10,18 +10,18 @@ namespace MicroBatching
         private readonly MicroBatchingServiceOptions _options;
         private readonly Queue<Job> _jobs = new();
         private readonly Dictionary<int, TaskCompletionSource<JobResult>> _results = new();
-        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(0);
-        private readonly object _lock = new();
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(0); // used to sync job information across threads
+        private readonly object _lock = new(); // used to lock content to current thread for thread safety
         private bool _shutdown = false;
         private bool _processing = false;
 
         /// <summary>
         /// New micro batching service with custom batching options
         /// </summary>
-        /// <param name="batchProcessor">processes the batched jobs</param>
-        /// <param name="logger">sets the logger to receive logs</param>
+        /// <param name="batchProcessor">implements the IBatchProcessor interface and processes the batched jobs</param>
+        /// <param name="logger">simple logger implementing the ILogger interface, sets the logger to receive logs</param>
         /// <param name="options">custom batching options for the service</param>
-        public MicroBatchingService(IBatchProcessor batchProcessor, ILogger logger, MicroBatchingServiceOptions options) // replace ilogger with my own interface
+        public MicroBatchingService(IBatchProcessor batchProcessor, ILogger logger, MicroBatchingServiceOptions options)
         {
             _batchProcessor = batchProcessor;
             _logger = logger;
@@ -91,7 +91,7 @@ namespace MicroBatching
             lock (_lock)
             {
                 _jobs.Enqueue(job);
-                _semaphore.Release(); // Signal to start processing
+                _semaphore.Release(); // Signal that a job has been added
                 var tcs = new TaskCompletionSource<JobResult>();
                 _results[job.Id] = tcs;
                 return tcs.Task;
@@ -120,7 +120,7 @@ namespace MicroBatching
 
             while (!_shutdown || _jobs.Count > 0) // while not shutdown or remaining jobs
             {
-                await _semaphore.WaitAsync(); // Wait for signal from first added job to start processing
+                await _semaphore.WaitAsync(); // Wait until there are some jobs for processing
 
                 // Wait for the next execution interval
                 await Task.Delay(_options.Frequency);

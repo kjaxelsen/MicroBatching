@@ -3,6 +3,7 @@ using MicroBatching.Interfaces;
 using MicroBatching.Models;
 using Moq;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace MicroBatchingTests
 {
@@ -45,7 +46,7 @@ namespace MicroBatchingTests
             List<Task<JobResult>> tasks = new();
             for (int i = 1; i <= 20; i++)
             {
-                Task<JobResult> taskResult = _service.AddJobAndProcessAsync(new Job(i, $"test - {i}"));
+                Task<JobResult> taskResult = _service.AddJob(new Job(i, $"test - {i}"));
                 tasks.Add(taskResult);
             }
 
@@ -80,7 +81,7 @@ namespace MicroBatchingTests
             List<Task<JobResult>> tasks = new();
             for (int i = 1; i <= 20; i++)
             {
-                Task<JobResult> taskResult = _service.AddJobAndProcessAsync(new Job(i, $"test - {i}"));
+                Task<JobResult> taskResult = _service.AddJob(new Job(i, $"test - {i}"));
                 tasks.Add(taskResult);
             }
 
@@ -114,7 +115,7 @@ namespace MicroBatchingTests
             List<Task<JobResult>> tasks = new();
             for (int i = 1; i <= 20; i++)
             {
-                Task<JobResult> taskResult = _service.AddJobAndProcessAsync(new Job(i, $"test - {i}"));
+                Task<JobResult> taskResult = _service.AddJob(new Job(i, $"test - {i}"));
                 tasks.Add(taskResult);
             }
 
@@ -140,7 +141,7 @@ namespace MicroBatchingTests
             List<Task<JobResult>> tasks = new();
             for (int i = 1; i <= 10; i++)
             {
-                Task<JobResult> taskResult = _service.AddJobAndProcessAsync(new Job(i, $"test - {i}"));
+                Task<JobResult> taskResult = _service.AddJob(new Job(i, $"test - {i}"));
                 tasks.Add(taskResult);
             }
 
@@ -150,7 +151,7 @@ namespace MicroBatchingTests
             // add 10 more jobs
             for (int i = 11; i <= 20; i++)
             {
-                Task<JobResult> taskResult = _service.AddJobAndProcessAsync(new Job(i, $"test - {i}"));
+                Task<JobResult> taskResult = _service.AddJob(new Job(i, $"test - {i}"));
                 tasks.Add(taskResult);
             }
 
@@ -164,6 +165,42 @@ namespace MicroBatchingTests
             // confirm the first half of the jobs succeeded and the latter half failed
             Assert.Equal(10, results.Count(r => r.Status == JobResultStatus.Success));
             Assert.Equal(10, results.Count(r => r.Status == JobResultStatus.Error));
+        }
+
+        [Fact]
+        public async void Job_ReturnsArgumentNullException_OnNullValue()
+        {
+            MockBatchProcessor();
+
+            _service.StartProcessing();
+
+            // have the service run a batch of 10 every second (no queue limit)
+            _service.UpdateOptions(new MicroBatchingServiceOptions(2000, 10, 1));
+
+            Task<JobResult> taskResult = _service.AddJob(null);
+
+            // confirm null value returns exception
+            await Assert.ThrowsAsync<ArgumentNullException>(() => taskResult);
+        }
+
+        [Fact]
+        public async void ReturnsExistingJobResult_WhenJobAlreadyAdded()
+        {
+            MockBatchProcessor();
+
+            _service.StartProcessing();
+
+            // add 2 tasks with the same id
+            List<Task<JobResult>> tasks = new();
+            Task<JobResult> taskResult = _service.AddJob(new Job(1, $"test - {1}"));
+            tasks.Add(taskResult);
+
+            // content is ignored when id is duplicate
+            Task<JobResult> taskResult2 = _service.AddJob(new Job(1, $"test - duplicate"));
+            tasks.Add(taskResult2);
+
+            // confirm the tasks are the same
+            Assert.Equal(taskResult, taskResult2);
         }
 
         private void MockBatchProcessor()

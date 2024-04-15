@@ -12,8 +12,7 @@ namespace MicroBatchingExample
             for (int i = 0; i < jobs.Count; i++)
             {
                 Job job = jobs[i];
-                JobResultStatus alternatingStatus = i % 2 == 0 ? JobResultStatus.Success : JobResultStatus.Error;
-                results.Add(new JobResult(job.Id, alternatingStatus, alternatingStatus.ToString()));
+                results.Add(new JobResult(job.Id, JobResultStatus.Success, JobResultStatus.Success.ToString()));
                 Console.WriteLine($"Job processed - Id: {job.Id}, Content: {job.Content}");
             }
             return results;

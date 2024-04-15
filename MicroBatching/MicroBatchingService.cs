@@ -51,17 +51,12 @@ namespace MicroBatching
             _logger.Log(LogLevel.Debug, "Shutting down");
         }
 
-        public bool IsProcessing()
-        {
-            return _processing;
-        }
-
         /// <summary>
         /// adds a job to the list of jobs to be batched and processed
         /// </summary>
         /// <param name="job">the job to be added and processed</param>
         /// <returns>a task containing the job result</returns>
-        public Task<JobResult> AddJobAndProcessAsync(Job job)
+        public Task<JobResult> AddJob(Job job)
         {
             if (job == null)
             {

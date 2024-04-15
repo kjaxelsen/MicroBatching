@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroBatching", "MicroBatching\MicroBatching.csproj", "{CEA83BBB-D6E8-45CE-A455-9B07F3E4F2E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroBatchingExample", "MicroBatchingExample\MicroBatchingExample.csproj", "{298C3F49-E468-4D00-AC1F-C8C474A637F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroBatchingExample", "MicroBatchingExample\MicroBatchingExample.csproj", "{298C3F49-E468-4D00-AC1F-C8C474A637F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroBatchingTests", "MicroBatchingTests\MicroBatchingTests.csproj", "{9176B9FB-8203-4F02-A7DB-E295F5B4B981}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{298C3F49-E468-4D00-AC1F-C8C474A637F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{298C3F49-E468-4D00-AC1F-C8C474A637F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{298C3F49-E468-4D00-AC1F-C8C474A637F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9176B9FB-8203-4F02-A7DB-E295F5B4B981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9176B9FB-8203-4F02-A7DB-E295F5B4B981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9176B9FB-8203-4F02-A7DB-E295F5B4B981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9176B9FB-8203-4F02-A7DB-E295F5B4B981}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -29,7 +29,7 @@ namespace MicroBatching
         }
 
         /// <summary>
-        /// update the micro-batching service options before or during processing
+        /// overrides the existing micro batching service options
         /// </summary>
         /// <param name="newOptions">the new set of options to replace the current ones</param>
         public void UpdateOptions(MicroBatchingServiceOptions newOptions)
@@ -125,7 +125,7 @@ namespace MicroBatching
                 // Wait for the next execution interval
                 await Task.Delay(_options.Frequency);
 
-                _logger.Log(LogLevel.Debug, "Processing Batch");
+                _logger.Log(LogLevel.Debug, "Processing Batch.");
 
                 List<Job> batch = new();
 

@@ -1,5 +1,11 @@
 ﻿namespace MicroBatching.Models
 {
+    /// <summary>
+    /// status returned from the job result
+    /// </summary>
+    /// <remarks>
+    /// could be extended to be more detailed
+    /// </remarks>
     public enum JobResultStatus
     {
         Error,

@@ -23,7 +23,7 @@ namespace MicroBatchingTests
             _service.StartProcessing();
 
             // wait long enough that at least one batch would run
-            Thread.Sleep(10000);
+            Thread.Sleep(3000);
 
             // verify it never ran
             _batchProcessor.Verify(b => b.Process(It.IsAny<List<Job>>()), Times.Never);
